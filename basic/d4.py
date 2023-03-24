@@ -61,6 +61,6 @@ if __name__ == '__main__':
     # d4 개발자의 테스트 코드
     # f5 개발자가 사용할 때는 작동 안함
     # 정상계정
-    print(login_db('guest', '1234'))
+    login_db('guest', '1234')
     # 비정상계정
-    print(login_db('guest', '12345'))
+    #print(login_db('guest', '12345'))
