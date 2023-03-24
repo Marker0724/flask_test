@@ -24,10 +24,21 @@
         위와 같은 접근을 필터링 할 것인가? 보안의 기본사항
 '''
 
-from flask import Flask, render_template, jsonify, request, redirect, url_for
+from flask import Flask, render_template, jsonify, request, redirect, url_for, session
 from d4 import login_db
 
 app = Flask(__name__)
+# 세션을 위해서 시크릿키 지정
+app.secret_key = 'qwerasdgasdjbkhnds' # 임의값, 통상 해시값 활용
+
+# 로그인을 하여 세션을 얻은 후 홈페이지를 진입해야 사이트의 내용을 보여주겠다. -> 컨셉
+@app.route("/")
+def home():
+    if not 'uid' in session: # 세션 내부에 uid 값이 존재하는가?
+        #return redirect('/login') URL을 사용할 때에는 하드코딩하지 않는다.
+        # url_for('사용하고자 하는 URL과 연결된 함수명을 기입')
+        return redirect(url_for('login'))
+    return 'Hello World'
 
 # @app.route() => 기본적으로 GET 방식
 # 메소드 추가는 => methods=['POST', ...]
@@ -45,8 +56,14 @@ def login():
         # 2. 회원 여부를 쿼리
         result = login_db(uid, upw)
         if result :# 3. 회원이면
+            # 세션 : 클라이언트 정보를 서버가 메모리상에 유지하여서,
+            #       클라이언트가 간편하게 웹을 이용할 수 있도록 도움을 준다.
+            #       단점 : 접속 유저가 많으면 서버측 메모리가 부하가 온다. -> 대체제 필요/대안 필요
+            #       JWT를 사용하여 보완
             # 3-1. 세션 생성, 기타 필요한 조치 수행
+            session['uid'] = uid
             # 3-2. 서비스 메인 화면으로 이동
+            return redirect(url_for('home'))
             pass
         else:# 4. 회원 아니면
             # 4-1. 적당한 메세지 후 다시 로그인 유도
