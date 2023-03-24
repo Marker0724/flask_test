@@ -3,7 +3,7 @@
 '''
 import pymysql as my
 
-def login_db() :
+def login_db(uid, upw) :
     connection = None
 
     try:
@@ -28,7 +28,7 @@ def login_db() :
                     upw=%s;
             '''
             # execute() 함수의 2번 인자가 파라미터 전달하는 자리, 튜플로 표현
-            cursor.execute(sql, ('guest', '1234'))
+            cursor.execute(sql, (uid, upw))
             row = cursor.fetchone()
             print(row['name'])
             pass 
@@ -46,4 +46,4 @@ def login_db() :
 if __name__ == '__main__':
     # d4 개발자의 테스트 코드
     # f5 개발자가 사용할 때는 작동 안함
-    login_db()
+    login_db('guest', '1234')
