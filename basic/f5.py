@@ -50,7 +50,9 @@ def login():
             pass
         else:# 4. 회원 아니면
             # 4-1. 적당한 메세지 후 다시 로그인 유도
-            return render_template('error.html')
+            # render_template() => jinja2 템플릿 엔진 사용
+            # 문법 jinja2를 따라간다.
+            return render_template('error.html', msg = '로그인 실패')
             pass
             
         
