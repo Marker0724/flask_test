@@ -14,3 +14,6 @@
             L __init__.py
     - 최종 실행 명령
         - flask --app service --debug run  
+
+# 블루 프린트
+    - URL과 함수의 매핑(라우트)을 관리하는 도구
