@@ -9,10 +9,11 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField
 # 유효성 검사용 옵션 가져오기
 from wtforms.validators import DataRequired, Length, Email
+# pip install email_validator
 
 class FormQuestion(FlaskForm):
     # 클래스 변수만 지정
     # 변수명 -> id값, name 값, '제목' => label값이 된다.
-    title = StringField('제목', validators=[DataRequired('제목 입력 필수')])
+    title = StringField('제목' ,validators=[DataRequired('제목 입력 필수'), Email()])
     content = TextAreaField('내용', validators=[DataRequired()])
     pass

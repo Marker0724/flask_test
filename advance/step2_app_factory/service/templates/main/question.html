@@ -6,11 +6,24 @@
             {# csrf 토큰 #}
             {{wtf.csrf_token}}
             {# 폼 유효성 검사 후 오류 내용 출력(생략 가능) #}
+            <div role="alert">
+                {% for field, errors in wtf.errors.items() %}
+                <b>{{wtf.get(field).label}}</b>
+            <ol>
+                {% for err in errors %}
+                    <li>{{err}}</li>
+                {% endfor %}
+            </ol>
+                {% endfor %}
+            </div>
             {# 입력-질문의 제목 #}
             {{wtf.title.label}}
             {{wtf.title(class='form-control')}}
             {# 입력-질문의 내용 #}
+            {{wtf.content.label}}
+            {{wtf.content(class='form-control')}}
             {# 전송기능 #}
+            <button type="submit" class="btn btn-warning" name="submit" >저장</button>
         </form>
     </div>
 {% endblock %}
