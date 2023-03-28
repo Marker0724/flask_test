@@ -14,9 +14,13 @@ def home():
     print(url_for('auth_bp.login'))
     return '인증 홈'
 
-@auth.route('/login')
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
-    return '로그인 홈'
+    if request.method == 'GET':
+        return render_template('login.html')
+    else:
+        # jwt 관련 체크 -> 정상(200), 오류(401)
+        return 'jwt 체크 완료'
 
 @auth.route('/logout')
 def logout():
