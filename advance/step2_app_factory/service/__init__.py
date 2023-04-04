@@ -1,5 +1,11 @@
 # 사용자가 정의한 엔트리 포인트
 from flask import Flask, render_template
+# TODO: ORM을 위한 추가
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
+db = SQLAlchemy()
+migrate = Migrate()
 
 '''
     create_app은 플라스크 내부에서 정의된 함수 명(수정 X)
@@ -11,6 +17,8 @@ def create_app():
     app = Flask(__name__)
     # 환경 변수 초기화
     init_environment(app)
+    # 데이터베이스 초기화
+    init_database(app)
     # 블루 프린트 초기화
     init_blueprint(app)
     
@@ -29,6 +37,17 @@ def init_environment(app):
 #    for k, v in app.config.items():
 #        print(k, v)
     print('\n' + '-'*20)
+
+def init_database(app):
+    # pool 
+    from .model import pool_sql
+    pool_sql.init_pool()
+    # 테스트
+    print(pool_sql.login('guest','1234'))
+    # ORM을 위한 flask 객체와 SQLAlchemy객체, migrate 객체 연결
+    db.init_app(app)
+    migrate.init_app(app, db)
+    from .model import models
 
 def init_blueprint(app):
     # app에 블루프린트 객체를 등록한다.
