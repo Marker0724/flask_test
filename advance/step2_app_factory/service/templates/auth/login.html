@@ -16,6 +16,20 @@
                 data:{uid:'guest', upw:'1234'},
                 success:res=>{
                     console.log(res)
+                    // 토큰을 쿠키에 저장
+                    let access_token = res.token
+                    console.log(access_token)
+                    if(res.code == 1){
+                        // 토큰을 쿠키에 저장
+                        // path -> 토큰의 유효범위 (URL 기주), '/' -> 전체패스를 적용
+                        $.cookie('token', access_token, {path:'/'})
+                        // 특정 페이지로 이동
+                        window.location.replace("{{url_for('main_bp.home')}}")
+                    }
+                    else{
+                        // 토큰 발행 실패
+                        alert(res.msg)
+                    }
                 }
             })
         })
