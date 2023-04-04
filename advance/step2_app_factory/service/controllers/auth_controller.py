@@ -9,7 +9,7 @@ from flask import current_app # Flask 객체 획득
 from service.controllers import bp_auth as auth
 # 시간 정보를 획득, 시간차를 계산하는 함수
 from datetime import datetime, timedelta
-import jwt
+import jwt, bcrypt
 
 
 @auth.route('/')
@@ -48,6 +48,14 @@ def logout():
 
 @auth.route('/sighup')
 def sighup():
+    # TODO : 비밀번호 암호화
+    password = '1234'
+    # 암호화
+    b = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    # 확인 및 복호화
+    #bcrypt.checkpw() => 이것으로 암호가 일치하는지만 체크해서 로그인 시 활용
+    print(password, b, bcrypt.checkpw(password.encode('utf-8'), b))
+
     return '회원가입 홈'
 
 @auth.route('/delete')
