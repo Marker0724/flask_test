@@ -12,7 +12,7 @@ def get_conn():
                         user='root',
                         password='12341234',
                         database='ml_db',
-                        cursorclass=pymysql.cursor.DictCursor)
+                        cursorclass=pymysql.cursors.DictCursor)
     return c
 
 # 풀링 생성 함수
