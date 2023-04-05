@@ -13,7 +13,7 @@ class Question(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     title = db.Column(db.String(256), nullable=False)
     content = db.Column(db.Text(), nullable=False)
-    reg_data = db.Column(db.DataTime(), nullable=False)
+    reg_data = db.Column(db.DateTime(), nullable=False)
 
 # 답변 테이블
 # question_id : 답변과 질문을 연결하기 위해 추가된 속성
@@ -30,5 +30,5 @@ class Answer(db.Model):
     question_id = db.Column(db.Integer(), db.ForeignKey('question.id', ondelete='CASCADE'))
     question = db.relationship('Question', backref=db.backref('answer_set'))
     content = db.Column(db.Text(), nullable=False)
-    reg_data = db.Column(db.DataTime(), nullable=False)
+    reg_data = db.Column(db.DateTime(), nullable=False)
     pass

@@ -133,10 +133,45 @@
         - 데이터 베이스 생성
             - FLASK_APP=service는 없어도 되는데, 이 앱은 app or wsfi로 시작하는 엔트리가 없으므로, 별도로 지정해야 한다.
             - FLASK_APP=service flask db init
+                - sqllite : 소형 데이터 베이스, 스마트폰에서 사용하는 DB, 이 경우에는 데이터 베이스 생성을 자동으로 해줌. 파일럿 형태에서 사용
+                - mysql 같은 데이터베이스(케이스별로 상이)는 실제로는 생성 안된다.
+
             - migrations 폴더가 생긴다.(내부는 자동으로 만들어지는 구조이므로, 관여하지 않는다.) 단, versions 밑으로 수정할 때마다 새로운 버전의 DB 관련 생성된다.
         - 모델(테이블) 생성, 변경
+            - model > models.py에 테이블 관련 내용 기술
+            - service > __init___.py : 주석 해제 혹은 신규 작성
             - flask --app service db migrate
+            ```
+                +-----------------+
+                | Tables_in_my_db |
+                +-----------------+
+                | alembic_version |
+                +-----------------+
+                1 row in set (0.001 sec)
+            ```
+
         - 모델(테이블) 생성, 변경 후 데이터베이스에 적용
             - flask --app service db upgrade
         - 컨테이너 이미지 생성 시
             - 위에 명령들 3개를 차례대로 수행해서 데이터 베이스 초기화, 생성 과정을 수행
+
+    - 필요한 기능들 시뮬레이션
+        - DBA는 sql문을 작성해서 쿼리를 구현
+        - ORM은 shell을 열어서 파이썬 코드로 구현
+        - flask --app service shell 
+            - 질문 등록
+            ```
+                from service.model.models import Question, Answer 
+                from datetime import datetime
+                from service import db
+
+                q1 = Question(title="질문1", content="내용1", reg_data=datetime.now())
+                db.session.add(q1) 
+                db.session.commit()
+            ```
+            - 질문 조회
+            ```
+                
+            ```
+            - 답변 등록
+                ...
