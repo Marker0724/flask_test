@@ -171,7 +171,7 @@
             ```
             - 질문 조회
             ```
-                # select * from question;
+                # 전체 데이터 조회 : select * from question;
                 >>> Question.query.all() 
                 [<Question 1>]
                 >>> qs = Question.query.all() 
@@ -179,7 +179,7 @@
                 <Question 1>
                 >>> qs[0].title
                 '질문1'
-                # id값을 넣어서 조회
+                # id값을 넣어서 조회 : select * from question where id=1;
                 >>> Question.query.get(1)
                 <Question 1>
                 # 내용중에 '용' 문자열이 존재하면 다가져오시오.
